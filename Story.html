@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Storytelling</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            padding: 20px;
+            text-align: center;
+            color: #333;
+        }
+        h1 {
+            color: #ff6347;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff4500;
+        }
+        
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Choose Your Own Adventure</h1>
+    <p>Welcome to the interactive storytelling experience. Make your choices wisely!</p>
+    <p>Once upon a time, you find yourself at a crossroads. Do you:</p>
+    <button onclick="goLeft()">Go left</button>
+    <button onclick="goRight()">Go right</button>
+    <p id="story"></p>
+    <script>
+        function goLeft() {
+            document.getElementById("story").innerHTML = "You chose to go left. You stumble upon a hidden cave. Do you enter the cave or keep walking?";
+            document.body.innerHTML += '<button onclick="enterCave()">Enter the cave</button><button onclick="keepWalking()">Keep walking</button>';
+        }
+        function goRight() {
+            document.getElementById("story").innerHTML = "You chose to go right. You come across a mysterious forest. Do you explore the forest or turn back?";
+            document.body.innerHTML += '<button onclick="exploreForest()">Explore the forest</button><button onclick="turnBack()">Turn back</button>';
+        }
+        function enterCave() {
+            document.getElementById("story").innerHTML = "You enter the cave and find a treasure chest. As you open it, a dragon appears! Do you fight the dragon or try to escape?";
+            document.body.innerHTML += '<button onclick="fightDragon()">Fight the dragon</button><button onclick="escapeCave()">Try to escape</button>';
+        }
+        function keepWalking() {
+            document.getElementById("story").innerHTML = "You decide to keep walking and eventually reach a beautiful meadow. You see a small house in the distance. Do you approach the house or rest in the meadow?";
+            document.body.innerHTML += '<button onclick="approachHouse()">Approach the house</button><button onclick="restMeadow()">Rest in the meadow</button>';
+        }
+        function exploreForest() {
+            document.getElementById("story").innerHTML = "You explore the forest and encounter a friendly unicorn. The unicorn grants you a wish. What do you wish for?";
+            document.body.innerHTML += '<input type="text" id="wish"><button onclick="makeWish()">Make a wish</button>';
+        }
+        function turnBack() {
+            document.getElementById("story").innerHTML = "You turn back and return to the crossroads. The end.";
+        }
+        function fightDragon() {
+            document.getElementById("story").innerHTML = "You bravely fight the dragon and defeat it! Inside the treasure chest, you find a magical sword. The end.";
+        }
+        function escapeCave() {
+            document.getElementById("story").innerHTML = "You try to escape, but the dragon is too fast. You narrowly escape with your life, but the treasure remains in the cave. The end.";
+        }
+        function approachHouse() {
+            document.getElementById("story").innerHTML = "You approach the house and meet an old wizard. The wizard offers to teach you powerful spells. Do you accept the offer or decline and continue your journey?";
+            document.body.innerHTML += '<button onclick="learnSpells()">Learn spells</button><button onclick="declineWizard()">Decline and continue</button>';
+        }
+        function restMeadow() {
+            document.getElementById("story").innerHTML = "You rest in the meadow and enjoy the peace and tranquility. The end.";
+        }
+        function learnSpells() {
+            document.getElementById("story").innerHTML = "You learn powerful spells from the wizard and become a legendary sorcerer. The end.";
+        }
+        function declineWizard() {
+            document.getElementById("story").innerHTML = "You decline the wizard's offer and continue your journey, forever wondering what might have been. The end.";
+        }
+        function makeWish() {
+            var wish = document.getElementById("wish").value;
+            document.getElementById("story").innerHTML = "You made a wish for: " + wish + ". The unicorn smiles and grants your wish. The end.";
+        }
+    </script>
+</body>
+</html>
