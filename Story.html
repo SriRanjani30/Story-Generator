@@ -6,43 +6,87 @@
     <title>Interactive Storytelling</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
             padding: 20px;
             text-align: center;
             color: #333;
+            overflow: hidden;
         }
         h1 {
-            color: #6a5acd;
+            color: #ff6f61;
+            font-size: 3em;
+            margin-bottom: 10px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        p {
+            font-size: 1.2em;
+            margin: 10px 0;
+            animation: fadeIn 1.5s ease-in-out;
         }
         button {
             margin: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #6a5acd;
+            padding: 15px 25px;
+            font-size: 1.2em;
+            background-color: #ff6f61;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 50px;
             cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            animation: fadeIn 2s ease-in-out;
         }
         button:hover {
-            background-color: #483d8b;
+            background-color: #ff3f2f;
+            transform: scale(1.1);
         }
         input[type="text"] {
             padding: 10px;
-            font-size: 16px;
+            font-size: 1.2em;
             margin-top: 10px;
+            border: 2px solid #ff6f61;
+            border-radius: 20px;
+            width: 60%;
+            animation: fadeIn 2.5s ease-in-out;
         }
         #story {
             margin-top: 20px;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            animation: slideIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
     </style>
 </head>
 <body>
+    <div id="themeChanger">
+        <label for="themes">Change Theme:</label>
+        <select id="themes" onchange="changeTheme()">
+            <option value="default">Default</option>
+            <option value="dark">Dark</option>
+            <option value="forest">Forest</option>
+            <option value="ocean">Ocean</option>
+        </select>
+    </div>
     <h1>Choose Your Own Adventure</h1>
     <p>Welcome to the interactive storytelling experience. Every choice shapes your destiny!</p>
     <p>Once upon a time, you find yourself at a crossroads. Do you:</p>
@@ -50,97 +94,138 @@
     <button onclick="goRight()">Go right</button>
     <div id="story"></div>
     <script>
+          function changeTheme() {
+            var theme = document.getElementById("themes").value;
+            if (theme === "default") {
+                document.body.style.background = "linear-gradient(to bottom right, #FFDDC1, #FFABAB)";
+                document.body.style.color = "#333";
+            } else if (theme === "dark") {
+                document.body.style.background = "linear-gradient(to bottom right, #333, #555)";
+                document.body.style.color = "#FFF";
+            } else if (theme === "forest") {
+                document.body.style.background = "linear-gradient(to bottom right, #004d00, #66ff66)";
+                document.body.style.color = "#FFF";
+            } else if (theme === "ocean") {
+                document.body.style.background = "linear-gradient(to bottom right, #003366, #66ccff)";
+                document.body.style.color = "#FFF";
+            }
+        }
         function goLeft() {
             document.getElementById("story").innerHTML = "<p>You chose to go left. You stumble upon a hidden cave, its entrance shrouded in mist. The air feels heavy, as if the cave is alive with secrets. Do you enter the cave or keep walking?</p>";
             document.getElementById("story").innerHTML += '<button onclick="enterCave()">Enter the cave</button><button onclick="keepWalking()">Keep walking</button>';
         }
+
         function goRight() {
             document.getElementById("story").innerHTML = "<p>You chose to go right. The path leads you to a dense forest, where ancient trees whisper of forgotten times. The air grows colder as you venture deeper. Do you explore the forest or turn back?</p>";
             document.getElementById("story").innerHTML += '<button onclick="exploreForest()">Explore the forest</button><button onclick="turnBack()">Turn back</button>';
         }
+
         function enterCave() {
             document.getElementById("story").innerHTML = "<p>As you step into the cave, the light dims and the air cools. You see a faint glow deeper inside. The glow comes from an ancient artifact resting on an altar. Suddenly, a dragon's roar echoes through the cave. Do you take the artifact or retreat before the dragon arrives?</p>";
             document.getElementById("story").innerHTML += '<button onclick="takeArtifact()">Take the artifact</button><button onclick="retreat()">Retreat</button>';
         }
+
         function keepWalking() {
             document.getElementById("story").innerHTML = "<p>You keep walking along the path. As you walk, you notice a strange symbol carved into a nearby tree. The symbol glows faintly, and you feel a pull towards it. Do you touch the symbol or continue on your way?</p>";
             document.getElementById("story").innerHTML += '<button onclick="touchSymbol()">Touch the symbol</button><button onclick="continueWalking()">Continue walking</button>';
         }
+
         function exploreForest() {
             document.getElementById("story").innerHTML = "<p>You explore the forest and encounter a majestic unicorn. The unicorn's eyes hold the wisdom of the ages, and it offers to grant you a single wish. What do you wish for?</p>";
             document.getElementById("story").innerHTML += '<input type="text" id="wish"><button onclick="makeWish()">Make a wish</button>';
         }
+
         function turnBack() {
             document.getElementById("story").innerHTML = "<p>You turn back and return to the crossroads. As you walk, you notice something odd: the path is no longer the same. The air is thick with mystery. The end?</p>";
         }
+
         function takeArtifact() {
             document.getElementById("story").innerHTML = "<p>You grasp the artifact, and power surges through your veins. The dragon emerges, its eyes locked onto you. Do you use the artifact's power to fight the dragon, or do you attempt to negotiate with the ancient beast?</p>";
             document.getElementById("story").innerHTML += '<button onclick="fightDragon()">Fight the dragon</button><button onclick="negotiateWithDragon()">Negotiate with the dragon</button>';
         }
+
         function retreat() {
             document.getElementById("story").innerHTML = "<p>You decide to retreat, but the cave entrance has mysteriously sealed itself. Trapped, you must find another way out. You notice a narrow passage to your left. Do you follow the passage or try to break through the sealed entrance?</p>";
             document.getElementById("story").innerHTML += '<button onclick="followPassage()">Follow the passage</button><button onclick="breakEntrance()">Break the entrance</button>';
         }
+
         function touchSymbol() {
             document.getElementById("story").innerHTML = "<p>You touch the symbol, and a portal opens before you, showing a world filled with magic and wonder. Do you step through the portal or ignore the temptation and continue on your journey?</p>";
             document.getElementById("story").innerHTML += '<button onclick="stepThroughPortal()">Step through the portal</button><button onclick="ignorePortal()">Ignore the portal</button>';
         }
+
         function continueWalking() {
             document.getElementById("story").innerHTML = "<p>You continue walking and eventually reach a peaceful village. The villagers welcome you, offering food and shelter. Your journey comes to a restful end as you decide to settle in this tranquil place. The end.</p>";
         }
+
         function makeWish() {
             var wish = document.getElementById("wish").value;
             document.getElementById("story").innerHTML = "<p>You made a wish for: " + wish + ". The unicorn smiles, and your wish begins to manifest. However, the power of the wish has unforeseen consequences...</p>";
             document.getElementById("story").innerHTML += '<button onclick="exploreConsequences()">Explore the consequences</button>';
         }
+
         function exploreConsequences() {
             document.getElementById("story").innerHTML = "<p>Your wish has altered the fabric of reality. As the world shifts around you, you must decide whether to embrace the new world or find a way to reverse your wish. Do you embrace the new world or seek to undo the wish?</p>";
             document.getElementById("story").innerHTML += '<button onclick="embraceNewWorld()">Embrace the new world</button><button onclick="undoWish()">Undo the wish</button>';
         }
+
         function fightDragon() {
             document.getElementById("story").innerHTML = "<p>You channel the artifact's power and engage in a fierce battle with the dragon. After a long struggle, you emerge victorious. The artifact now holds even greater power, but with it comes great responsibility. Do you use the artifact to bring peace to the world or to seek out new adventures?</p>";
             document.getElementById("story").innerHTML += '<button onclick="bringPeace()">Bring peace</button><button onclick="seekAdventures()">Seek new adventures</button>';
         }
+
         function negotiateWithDragon() {
-            document.getElementById("story").innerHTML = "<p>You decide to negotiate with the dragon. The dragon, intrigued by your courage, agrees to a truce. In exchange for the artifact, the dragon offers you ancient knowledge. Do you accept the dragon's offer or decline and leave the cave?</p>";
-            document.getElementById("story").innerHTML += '<button onclick="acceptKnowledge()">Accept the knowledge</button><button onclick="declineOffer()">Decline and leave</button>';
+            document.getElementById("story").innerHTML = "<p>You decide to negotiate with the dragon. The dragon, intrigued by your courage, agrees to a truce. In exchange for the artifact, the dragon offers you ancient knowledge. Do you accept the dragon's offer or decline and keep the artifact?</p>";
+            document.getElementById("story").innerHTML += '<button onclick="acceptKnowledge()">Accept the knowledge</button><button onclick="declineOffer()">Decline the offer</button>';
         }
+
         function followPassage() {
-            document.getElementById("story").innerHTML = "<p>You follow the narrow passage, which leads you deeper into the cave. As you go further, you discover an underground city filled with ancient technology. The inhabitants welcome you as a lost hero. Do you stay and learn from them, or do you continue searching for an escape?</p>";
+            document.getElementById("story").innerHTML = "<p>You follow the narrow passage and discover a hidden underground city, where the inhabitants possess incredible technology. They offer you a choice: stay and learn their ways, or continue searching for a way back to the surface. Do you stay or continue searching?</p>";
             document.getElementById("story").innerHTML += '<button onclick="stayAndLearn()">Stay and learn</button><button onclick="continueSearching()">Continue searching</button>';
         }
+
         function breakEntrance() {
-            document.getElementById("story").innerHTML = "<p>You gather all your strength and break through the sealed entrance. As you emerge from the cave, you find yourself in an unfamiliar world, filled with strange creatures and landscapes. Do you explore this new world or find a way back to your own?</p>";
+            document.getElementById("story").innerHTML = "<p>You use all your strength to break through the sealed entrance, and finally, you succeed. Outside, you find a new world, different from the one you left. Do you explore this new world or seek a way back to your own?</p>";
             document.getElementById("story").innerHTML += '<button onclick="exploreNewWorld()">Explore the new world</button><button onclick="findWayBack()">Find a way back</button>';
         }
+
         function stepThroughPortal() {
             document.getElementById("story").innerHTML = "<p>You step through the portal and find yourself in a realm of endless possibilities. You are greeted by a wise old sage who offers to teach you the ways of magic. Do you stay and become a powerful mage, or do you return to your world with newfound knowledge?</p>";
             document.getElementById("story").innerHTML += '<button onclick="becomeMage()">Become a mage</button><button onclick="returnWithKnowledge()">Return with knowledge</button>';
         }
+
         function ignorePortal() {
             document.getElementById("story").innerHTML = "<p>You choose to ignore the portal and continue on your journey. The path ahead is filled with challenges, but you face them with determination. Eventually, you reach a grand castle where your true adventure begins. The end... or is it?</p>";
         }
+
         function embraceNewWorld() {
             document.getElementById("story").innerHTML = "<p>You decide to embrace the new world, shaping it with your wishes. You become a revered leader, guiding the new civilization with wisdom and compassion. The end of your journey marks the beginning of a new era. The end.</p>";
         }
+
         function undoWish() {
             document.getElementById("story").innerHTML = "<p>You seek out a way to undo your wish. After a long and perilous journey, you find a powerful artifact that allows you to reverse the changes. The world returns to its original state, and you continue your journey with newfound wisdom. The end.</p>";
         }
+
         function bringPeace() {
             document.getElementById("story").innerHTML = "<p>With the artifact's power, you bring peace to the world. The conflicts that once plagued the land are resolved, and a new era of harmony begins. Your name goes down in history as a legendary peacemaker. The end.</p>";
         }
+
         function seekAdventures() {
             document.getElementById("story").innerHTML = "<p>Rather than settling down, you decide to seek out new adventures. The artifact leads you to distant lands and forgotten realms, where you continue to shape your destiny. The legend of your exploits grows with each new tale. The end... for now.</p>";
         }
+
         function acceptKnowledge() {
             document.getElementById("story").innerHTML = "<p>You accept the dragon's offer and gain ancient knowledge that transforms your understanding of the world. Armed with this wisdom, you become a powerful and respected figure, guiding others on their own quests. The end.</p>";
         }
+
         function declineOffer() {
             document.getElementById("story").innerHTML = "<p>You decline the dragon's offer and leave the cave, artifact in hand. As you continue your journey, the artifact's power grows, and you discover new challenges that test your courage and resolve. The end.</p>";
         }
+
         function stayAndLearn() {
             document.getElementById("story").innerHTML = "<p>You decide to stay and learn from the inhabitants of the underground city. Over time, you master the ancient technology and lead the city to new heights. Your influence spreads, and the city becomes a beacon of knowledge and innovation. The end.</p>";
         }
+
         function continueSearching() {
             document.getElementById("story").innerHTML = "<p>Driven by a desire to escape, you continue searching for a way out of the underground city. After many trials, you find an exit and return to the surface, forever changed by your experiences. The end.</p>";
         }
@@ -153,6 +238,7 @@
         function becomeMage() {
             document.getElementById("story").innerHTML = "<p>You stay in the magical realm and train under the wise sage. Over time, you become a powerful mage, mastering the elements and bending reality to your will. Your adventures in this realm become legendary, and you leave a lasting legacy. The end.</p>";
         }
+
         function returnWithKnowledge() {
             document.getElementById("story").innerHTML = "<p>Deciding to return to your world, you bring with you the knowledge of magic. You use this newfound power to achieve great things, and your name becomes synonymous with the arcane arts. The end.</p>";
         }
